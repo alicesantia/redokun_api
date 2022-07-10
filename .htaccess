@@ -1,0 +1,19 @@
+DirectoryIndex index.php index.html
+
+<Files "config.ini">
+Order Allow,Deny
+Deny from all
+</Files>
+
+Options -Indexes
+AddDefaultCharset UTF-8
+
+RewriteEngine on
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^www\.(.+) [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [L,R=301]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|assets|user_guide|favicon\.ico)
+
+RewriteRule ^(.*)$ /index.php?/$1 [L]
